@@ -1,0 +1,22 @@
+/********通用定时器TIM2,3,4,5***************/
+
+		   ×1/×2			  ÷N
+APB1时钟 ————————> F(CK_PSC)——————> CK_CNT
+			↑
+			|
+		 CK_INT
+		 
+若APB1分频则×2再赋值给CK_INT
+
+计时器最终时钟频率：CK_CNT = f(CK_PSC)/(PSC[15:0]+1)
+
+TimeOut = (ARR+1)*(PSC+1)/(TIMx_CLK)  
+			 ↑         ↑          ↑
+	TIM_Period     TIM_Prescaler  CK_INT
+	自动重装载值  预分频器值	  定时器时钟频率
+	2^16			2^16		  APB1的分频为1，则为APB1，即HCLK  （现在是72MHZ）
+								  不为一，则APB1×2,即HCLK×2；
+
+
+
+疑问？？：TIM_FLAG_Update与TIM_IT_Update的区别在哪？
